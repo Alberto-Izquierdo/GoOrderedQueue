@@ -133,6 +133,238 @@ func TestQueueWithWrongValues(t *testing.T) {
 		t.Errorf("Pushing wrong values should return an error")
 	}
 	if q.Size() != 1 {
-		t.Errorf("The queue should contain 1 elements")
+		t.Errorf("The queue should contain 1 element")
+	}
+}
+
+func TestQueueWithMultipleTypes(t *testing.T) {
+	q := OrderedQueue{}
+	{
+		vector := []int{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []int8{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []int16{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []int32{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []int64{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []uint{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []uint8{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []uint16{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []uint32{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []uint64{1, 5, 3}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []float32{1.0, 5.0, 3.0}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
+	}
+	{
+		vector := []float64{1.0, 5.0, 3.0}
+		for _, element := range vector {
+			if err := q.Push(element); err != nil {
+				t.Errorf("Pushing correct values should not return an error")
+			}
+		}
+		if q.Size() != 3 {
+			t.Errorf("The queue should contain 3 elements, instead int contains %d elements", q.Size())
+		}
+		for _, _ = range vector {
+			if _, err := q.Pop(); err != nil {
+				t.Errorf("Pop() should not return an error")
+			}
+		}
+		if q.Size() != 0 {
+			t.Errorf("The queue should contain 0 elements")
+		}
 	}
 }
