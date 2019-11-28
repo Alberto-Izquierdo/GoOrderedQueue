@@ -38,6 +38,19 @@ func TestQueueWithInts(t *testing.T) {
 	}
 }
 
+type NewStruct struct {
+	value int
+}
+
+func TestQueueWithWrongStruct(t *testing.T) {
+	q := OrderedQueue{}
+	var value NewStruct
+	err := q.Push(value)
+	if err == nil {
+		t.Errorf("Pushing wrong struct should return an error")
+	}
+}
+
 func TestQueueWithStrings(t *testing.T) {
 	q := OrderedQueue{}
 	if err := q.Push("asdf"); err != nil {
@@ -78,10 +91,7 @@ type MyData struct {
 }
 
 func (this MyData) LessThan(other QueueElement) bool {
-	if this.A < other.(MyData).A {
-		return true
-	}
-	return false
+	return this.A < other.(MyData).A
 }
 
 func TestQueueWithCustomStruct(t *testing.T) {

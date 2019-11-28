@@ -19,8 +19,7 @@ func (q *OrderedQueue) Push(newElement interface{}) (err error) {
 			return errors.New("Trying to push an element of a different type from the original")
 		}
 	}
-	q.insertElement(newElement)
-	return nil
+	return q.insertElement(newElement)
 }
 
 func (q *OrderedQueue) Pop() (element interface{}, err error) {
@@ -37,13 +36,13 @@ func (q *OrderedQueue) Size() int {
 	return len(q.elements)
 }
 
-func (q *OrderedQueue) insertElement(newElement interface{}) {
+func (q *OrderedQueue) insertElement(newElement interface{}) error {
 	switch newElementCasted := newElement.(type) {
 	case int:
 		for index, value := range q.elements {
 			if newElementCasted < value.(int) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -51,7 +50,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(int8) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -59,7 +58,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(int16) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -67,7 +66,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(int32) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -75,7 +74,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(int64) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -83,7 +82,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(uint) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -91,7 +90,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(uint8) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -99,7 +98,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(uint16) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -107,7 +106,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(uint32) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -115,7 +114,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(uint64) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -123,7 +122,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(float32) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -131,7 +130,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(float64) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -139,7 +138,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted < value.(string) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElement}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
@@ -147,9 +146,12 @@ func (q *OrderedQueue) insertElement(newElement interface{}) {
 		for index, value := range q.elements {
 			if newElementCasted.LessThan(value.(QueueElement)) {
 				q.elements = append(q.elements[:index], append([]interface{}{newElementCasted}, q.elements[index:]...)...)
-				return
+				return nil
 			}
 		}
 		q.elements = append(q.elements, newElementCasted)
+	default:
+		return errors.New("Trying to push an element that cannot be compared or does not implement the QueueElement interface")
 	}
+	return nil
 }
