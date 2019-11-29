@@ -90,7 +90,7 @@ type MyData struct {
 	B string
 }
 
-func (this MyData) LessThan(other QueueElement) bool {
+func (this MyData) LessThan(other interface{}) bool {
 	return this.A < other.(MyData).A
 }
 

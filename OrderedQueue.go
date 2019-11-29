@@ -6,7 +6,7 @@ import (
 )
 
 type QueueElement interface {
-	LessThan(QueueElement) bool
+	LessThan(interface{}) bool
 }
 
 type OrderedQueue struct {
