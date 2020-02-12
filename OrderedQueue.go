@@ -155,3 +155,7 @@ func (q *OrderedQueue) insertElement(newElement interface{}) error {
 	}
 	return nil
 }
+
+func (q OrderedQueue) GetCurrentElements() []interface{} {
+	return q.elements
+}

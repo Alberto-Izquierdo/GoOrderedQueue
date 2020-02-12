@@ -239,3 +239,16 @@ func TestQueueWithMultipleTypes(t *testing.T) {
 		assert.Equal(t, 0, q.Size(), "The queue should contain 0 elements")
 	}
 }
+
+func TestGetAllElementsFromQueue(t *testing.T) {
+	q := OrderedQueue{}
+	assert.Nil(t, q.Push(3), "Pushing correct values should not return an error")
+	assert.Nil(t, q.Push(7), "Pushing correct values should not return an error")
+	assert.Nil(t, q.Push(1), "Pushing correct values should not return an error")
+	elements := q.GetCurrentElements()
+	assert.Equal(t, len(elements), q.Size(), "The slice returned by the \"GetCurrentElements()\" should have the same size than the queue")
+	for _, value := range elements {
+		queueValue, _ := q.Pop()
+		assert.Equal(t, value.(int), queueValue.(int), "The slice returned should contain the same values, than removing elements one by one")
+	}
+}

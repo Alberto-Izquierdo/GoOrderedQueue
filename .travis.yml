@@ -4,6 +4,6 @@ go:
     - 1.13.1
 
 script:
-    go mod download
-    go build
-    go test -cover
+    - go mod download
+    - go build
+    - go test -cover
