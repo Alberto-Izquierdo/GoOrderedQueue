@@ -156,6 +156,10 @@ func (q *OrderedQueue) insertElement(newElement interface{}) error {
 	return nil
 }
 
+func (q OrderedQueue) ClearAllElements() {
+	q.elements = q.elements[:0]
+}
+
 func (q OrderedQueue) GetCurrentElements() []interface{} {
 	return q.elements
 }
