@@ -1,6 +1,8 @@
 package ordered_queue
 
 import (
+	"math/rand"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -61,6 +63,9 @@ type MyData struct {
 
 func (this MyData) LessThan(other interface{}) bool {
 	return this.A < other.(MyData).A
+}
+func (this MyData) Equals(other interface{}) bool {
+	return this.A == other.(MyData).A
 }
 
 func TestQueueWithCustomStruct(t *testing.T) {
@@ -240,15 +245,83 @@ func TestQueueWithMultipleTypes(t *testing.T) {
 	}
 }
 
-func TestGetAllElementsFromQueue(t *testing.T) {
+func TestClearAllElements(t *testing.T) {
 	q := OrderedQueue{}
-	assert.Nil(t, q.Push(3), "Pushing correct values should not return an error")
-	assert.Nil(t, q.Push(7), "Pushing correct values should not return an error")
-	assert.Nil(t, q.Push(1), "Pushing correct values should not return an error")
-	elements := q.GetCurrentElements()
-	assert.Equal(t, len(elements), q.Size(), "The slice returned by the \"GetCurrentElements()\" should have the same size than the queue")
-	for _, value := range elements {
-		queueValue, _ := q.Pop()
-		assert.Equal(t, value.(int), queueValue.(int), "The slice returned should contain the same values, than removing elements one by one")
+	vector := []int{1, 5, 3}
+	for _, element := range vector {
+		assert.Nil(t, q.Push(element), "Pushing correct values should not return an error")
 	}
+	assert.Equal(t, 3, q.Size(), "The queue should contain 3 elements, instead int contains %d elements", q.Size())
+	q.ClearAllElements()
+	assert.Equal(t, 0, q.Size(), "The queue should contain 0 elements, instead int contains %d elements", q.Size())
+}
+
+func TestRemoveElements(t *testing.T) {
+	q := OrderedQueue{}
+	vector := []int{1, 5, 3}
+	for _, element := range vector {
+		assert.Nil(t, q.Push(element), "Pushing correct values should not return an error")
+	}
+	assert.Equal(t, 3, q.Size(), "The queue should contain 3 elements, instead int contains %d elements", q.Size())
+	removed, err := q.RemoveElement(3)
+	assert.True(t, removed)
+	assert.Nil(t, err)
+	assert.Equal(t, 2, q.Size(), "The queue should contain 2 elements, instead int contains %d elements", q.Size())
+	removed, err = q.RemoveElement(5)
+	assert.True(t, removed)
+	assert.Nil(t, err)
+	assert.Equal(t, 1, q.Size(), "The queue should contain 1 elements, instead int contains %d elements", q.Size())
+	removed, err = q.RemoveElement(1)
+	assert.True(t, removed)
+	assert.Nil(t, err)
+	assert.Equal(t, 0, q.Size(), "The queue should contain 0 elements, instead int contains %d elements", q.Size())
+	removed, err = q.RemoveElement(1)
+	assert.NotNil(t, err)
+}
+
+func TestRemoveRandomElements(t *testing.T) {
+	q := OrderedQueue{}
+	for i := 0; i < 10; i++ {
+		vector := []int{0, 1, 2, 3, 4, 5}
+		for j := 0; j < 6; j++ {
+			for _, element := range vector {
+				assert.Nil(t, q.Push(element), "Pushing correct values should not return an error")
+			}
+			indexToRemove := 0
+			if q.Size() > 1 {
+				indexToRemove = rand.Intn(len(vector) - 1)
+			}
+			elementToRemove := vector[indexToRemove]
+			copy(vector[indexToRemove:], vector[indexToRemove+1:])
+			vector = vector[:len(vector)-1]
+			removed, err := q.RemoveElement(elementToRemove)
+			assert.True(t, removed)
+			assert.Nil(t, err)
+			assert.Equal(t, len(vector), q.Size(), "The queue should contain "+strconv.Itoa(len(vector))+" elements, instead int contains %d elements", q.Size())
+			for index := range vector {
+				element, err := q.Pop()
+				assert.Equal(t, vector[index], element.(int))
+				assert.Nil(t, err)
+			}
+		}
+	}
+}
+
+func TestRemoveNonExistentElement(t *testing.T) {
+	q := OrderedQueue{}
+	vector := []int{0, 1, 3, 4, 5}
+	for _, element := range vector {
+		assert.Nil(t, q.Push(element), "Pushing correct values should not return an error")
+	}
+	removed, err := q.RemoveElement(2)
+	assert.False(t, removed)
+	assert.Nil(t, err)
+}
+
+func TestRemoveDifferentType(t *testing.T) {
+	q := OrderedQueue{}
+	q.Push(1)
+	removed, err := q.RemoveElement("asdf")
+	assert.False(t, removed)
+	assert.NotNil(t, err)
 }
