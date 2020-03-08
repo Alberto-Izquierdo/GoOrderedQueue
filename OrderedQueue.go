@@ -71,7 +71,7 @@ func (q *OrderedQueue) RemoveElement(elementToRemove interface{}) (bool, error) 
 		q.elements = q.elements[:len(q.elements)-1]
 		return true, nil
 	}
-	return false, nil
+	return false, errors.New("Element not found")
 }
 
 func (q OrderedQueue) findElement(elementToRemove interface{}) int {
@@ -93,6 +93,10 @@ func (q OrderedQueue) findElement(elementToRemove interface{}) int {
 			return -1
 		}
 	}
+}
+
+func (q OrderedQueue) GetCurrentElements() []interface{} {
+	return q.elements
 }
 
 func areElementsEqual(element1 interface{}, element2 interface{}) (bool, error) {

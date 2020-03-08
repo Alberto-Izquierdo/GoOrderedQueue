@@ -315,7 +315,7 @@ func TestRemoveNonExistentElement(t *testing.T) {
 	}
 	removed, err := q.RemoveElement(2)
 	assert.False(t, removed)
-	assert.Nil(t, err)
+	assert.NotNil(t, err)
 }
 
 func TestRemoveDifferentType(t *testing.T) {
